@@ -7,4 +7,4 @@
 #
 layout: home
 ---
-This is our blog collecting what I learn and think on statistics. Hope the material would also be helpful for you.
+This is our blog. Hope the material would also be helpful for you.
