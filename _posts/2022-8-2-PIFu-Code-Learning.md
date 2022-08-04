@@ -112,9 +112,9 @@ net_util.py
 * 初始化网络
   * 四种初始化方式：normal、xavier、kaiming、orthogonal
 * 卷积
-* cal_gradient_penalty：选择图片源（真实数据、虚假数据、真实虚假插值成的数据）计算梯度惩罚gp，不知道用改做什么，而且也没有调用该函数的地方。可能是想必将自己实现的梯度下降与torch内实现的梯度下降的差别？
+* cal_gradient_penalty：选择图片源（真实数据、虚假数据、真实虚假插值成的数据）计算梯度惩罚gp，不知道用来做什么，而且也没有调用该函数的地方。可能是想比较自己实现的梯度下降与torch内实现的梯度下降的差别？
 * get_norm_layer：返回归一化的层？不理解是做什么的
-* ConvBlock：一个激活函数用RELu，内涵多个卷积网络的网络类
+* ConvBlock：一个激活函数用RELu，内含多个卷积网络的网络类
 
 ---
 
@@ -126,13 +126,22 @@ options.py
 
 sample_util.py
 
+* 以可视化的形式保存采样点的错误情况到.ply文件中，红为正确预测，绿为错误预测
+
 ---
 
 sdf.py
 
+* signed distance field：有向距离场。通过描述空间内任意一点到几何体表面的最小距离的空间几何体表达方式
+
+* create_grid：根据指定的分辨率和BBox，生成该空间划分出的小格子和对应的变换矩阵。调用时的eval_func参数实际上就是由模型判断是否在几何体内。
+* eval_grid：调用eval_func（也就是用模型判断）来估计grid是否在几何体内部
+
 ---
 
 train_util.py
+
+* 该文件内容与net_util.py一模一样
 
 ---
 
@@ -142,13 +151,25 @@ train_util.py
 
 BaseDataset.py
 
+* 继承自Dataset
+* 初始化时为训练状态、正交投影
+* 长度始终为0，不明白为什么
+* 重载了[]操作符，返回一个字典，但字典内部的元素都为None
+* 并没有地方用到这个类。。。
+
 ---
 
 EvalDataset.py
 
+* 也没有用到
+
 ---
 
 TrainDataset.py
+
+* 对图像的亮度、对比度、饱和度进行调节以生成更多的数据
+* get_subjects：如果在训练阶段，返回还没有用于训练过的数据；如果不在，返回所有数据
+* 采样方法
 
 ---
 
@@ -158,37 +179,62 @@ TrainDataset.py
 
 BasePIFuNet.py
 
+* 没有实现filter和query的基类
+
 ---
 
 ConvFilters.py
+
+* 定义如下三个imagefilter
+  * MultiConv：多个卷积组成的卷积
+  * Vgg16：4、6、8、8、8的五层结构
+  * ResNet：根据传入model字符串决定是resnet18还是34还是50
 
 ---
 
 ConvPIFuNet.py
 
+* 没有用到
+* 继承自BasePIFuNet
+
 ---
 
 DepthNormaizer.py
+
+* 对z进行归一化的层
 
 ---
 
 HGFilters.py
 
+* HourGlass：3*level + 1层ConvBlock
+* HGFilter：根据不同参数有不同的网络结构，且网络结构较复杂
+
 ---
 
 HGPIFuNet.py
+
+* HGPIFuNet：继承自BasePIFuNet，用到了HGFilter、SurfaceClassifier、DepthNormalizer
 
 ---
 
 ResBlkPIFuNet.py
 
+* ResBlkPIFuNet：继承自BasePIFuNet，用到了ResnetFilter、SurfaceClassifier、DeNormalizer
+* ResnetBlock：比较复杂的一个网络结构
+* ResnetFilter：含ResnetBlock的一个复杂网络结构
+
 ----
 
 SurfaceClassifier.py
 
+* 大量一维卷积组成的网络
+
 ---
 
 VhullPIFuNet.py
+
+* 仅用于展示和调试的简单网络
 
 #### renderer
 
@@ -196,11 +242,24 @@ VhullPIFuNet.py
 
 camera.py
 
+* 与相机、视角相关的各种矩阵
+
 ---
 
 glm.py
+
+* 图形学中用到的简单的数学库，如vec3、叉乘、旋转、投影等。
 
 ---
 
 mesh.py
 
+* mesh相关的一系列函数
+* 读写mesh、纹理
+* 计算法向量
+
+##### gl
+
+---
+
+调用OpenGL库进行渲染
