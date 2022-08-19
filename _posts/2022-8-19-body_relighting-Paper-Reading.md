@@ -4,7 +4,7 @@ infer not only an albedo map, illumination but also a light transport map that e
 
 ##### architecture
 
-![image-20220819093118355](..\assets\image-20220819093118355.png)
+![image-20220819093118355](https://chaosharmonix.github.io\Notebook\assets\images\image-20220819093118355.png)
 
 为什么light transport map $\in \R^{NX9}$,N是pixel数量
 
@@ -54,4 +54,4 @@ aligned 3D models(脸朝前，垂直方向大小一致，padding一致（上下p
 
 Laval Indoor HDR dataset
 
-![image-20220819100442181](..\assets\image-20220819100442181.png)
+![image-20220819100442181](https://chaosharmonix.github.io\Notebook\assets\images\image-20220819100442181.png)
