@@ -22,7 +22,7 @@ Wasserstein GAN
 
 深度卷积网络
 
-![matting module](./assets/images/Snipaste_2022-08-19_13-40-08.png)
+![matting module](https://chaosharmonix.github.io/Notebook/assets/images/Snipaste_2022-08-19_13-40-08.png)
 
 图片和粗糙的trimap（off-the-shelf foreground segmentation network得到）经过U-Net得到精致的trimap、$\alpha$、F
 
@@ -40,7 +40,7 @@ Loss Function详见A.6，部分对应不太上
 
 输入应resize为1024*768的扣除的人像图，输出为每个像素点对应的法向量、反照率
 
-![Relighting Module](./assets/images/Snipaste_2022-08-19_14-27-55.png)
+![Relighting Module](https://chaosharmonix.github.io/Notebook/assets/images/Snipaste_2022-08-19_14-27-55.png)
 
 ###### Geometry Net
 
